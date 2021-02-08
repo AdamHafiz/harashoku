@@ -7,7 +7,7 @@ import json
 import base64
 
 
-@app.route("/", methods=["GET", "POST"])
+@app.route("/api", methods=["GET", "POST"])
 def upload_image():
 
     if request.method == "POST":
@@ -21,7 +21,7 @@ def upload_image():
             if os.path.exists(os.getcwd() + "/app/IO/output/predictions.jpg"):
                 os.remove(os.getcwd() + "/app/IO/output/predictions.jpg")
 
-            batcmd = "cd app/darknet/ && ./darknet detect cfg/yolov3.cfg yolov3.weights ../IO/input/input.png && cp predictions.jpg ../IO/output/predictions.jpg"
+            batcmd = "cd app/darknet/ && ./darknet detector test data/obj.data cfg/yolov3_custom7.cfg yolov3_custom7_final.weights -thresh 0.5 ../IO/input/input.png && cp predictions.jpg ../IO/output/predictions.jpg"
 
             result = subprocess.check_output(batcmd, shell=True)
 
